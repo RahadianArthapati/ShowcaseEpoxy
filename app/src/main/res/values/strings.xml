@@ -3,4 +3,6 @@
     <string name="error">error</string>
     <string name="product_error">there is no product</string>
     <string name="show_more">show more</string>
+    <string name="article_recommendation_text">You\'re gonna like</string>
+    <string name="article_brand_offer_text">See more</string>
 </resources>

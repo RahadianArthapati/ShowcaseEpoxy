@@ -62,6 +62,7 @@ public class Product {
         this.weight = weight;
     }
 
+    /*
     public List<String> getTag() {
         return tag;
     }
@@ -69,7 +70,7 @@ public class Product {
     public void setTag(List<String> tag) {
         this.tag = tag;
     }
-
+    */
     public Pricing getPricing() {
         return pricing;
     }

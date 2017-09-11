@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/bright_red</item>
+        <item name="colorPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
@@ -14,12 +14,16 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
+    <style name="NoActionBarTheme" parent="AppTheme" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
     <style name="toolbar_right_style">
         <item name="android:layout_gravity">center_vertical|right</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">5dp</item>
+        <item name="android:textColor">@color/bright_red</item>
     </style>
     <style name="toolbar_left_style">
         <item name="android:layout_gravity">center_vertical|left</item>
@@ -50,9 +54,9 @@
         <item name="android:textColor">@android:color/holo_orange_dark</item>
     </style>
     <style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light">
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:textColorSecondary">@android:color/white</item>
-        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/bright_red</item>
+        <item name="android:textColorSecondary">@color/bright_red</item>
+        <item name="actionMenuTextColor">@color/bright_red</item>
     </style>
     <style name="CollapsedToolbar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@android:color/white</item>

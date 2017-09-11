@@ -3,19 +3,12 @@ package com.grandline.showcaseepoxy.ui.components.catalog;
 import com.airbnb.epoxy.EpoxyAdapter;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
-import com.grandline.showcaseepoxy.data.model.Promotion;
-import com.grandline.showcaseepoxy.ui.models.CardModel_;
-import com.grandline.showcaseepoxy.ui.models.CarouselEpoxyModel;
 import com.grandline.showcaseepoxy.ui.models.CarouselEpoxyModel_;
 import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
 import com.grandline.showcaseepoxy.ui.models.ProductHeaderModel;
 import com.grandline.showcaseepoxy.ui.models.ProductHeaderModel_;
-import com.grandline.showcaseepoxy.ui.models.ThumbnailModel;
-import com.grandline.showcaseepoxy.ui.models.TitleModel;
-import com.grandline.showcaseepoxy.ui.models.TitleModel_;
-import com.grandline.showcaseepoxy.utils.ObjectUtils.*;
+
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Created by home on 9/7/17.

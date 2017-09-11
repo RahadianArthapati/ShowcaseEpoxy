@@ -1,5 +1,6 @@
 package com.grandline.showcaseepoxy.ui.components.catalog;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,13 +9,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.data.model.ProductsList;
 import com.grandline.showcaseepoxy.data.service.ProductService;
+import com.grandline.showcaseepoxy.ui.components.detail.DetailActivity;
 import com.grandline.showcaseepoxy.ui.helpers.VerticalGridCardSpacingDecoration;
 import com.grandline.showcaseepoxy.utils.ScreenUtils;
+import com.squareup.moshi.Moshi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +62,10 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
 
     @Override
     public void onCatalogClicked(Product product) {
-        Toast.makeText(MainActivity.this,product.getName(),Toast.LENGTH_SHORT).show();
+        String productJson = new Moshi.Builder().build().adapter(Product.class).toJson(product);
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.putExtra("product_detail", productJson);
+        startActivity(intent);
     }
 
     @Override
