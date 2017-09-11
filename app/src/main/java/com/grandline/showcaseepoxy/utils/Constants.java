@@ -1,0 +1,10 @@
+package com.grandline.showcaseepoxy.utils;
+
+/**
+ * Created by home on 9/7/17.
+ */
+
+public class Constants {
+    public static final String BASE_URL = "http://private-563d21-grandline.apiary-mock.com/";
+    public static final String IMG_URL = "https://s3-ap-southeast-1.amazonaws.com/media.redmart.com/newmedia/1600x";
+}

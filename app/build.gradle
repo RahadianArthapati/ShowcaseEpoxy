@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "com.grandline.showcaseepoxy"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+ext {
+    supportLibVersion = '26.0.2'
+    okhttpVersion = '3.5.0'
+    daggerVersion = '2.5'
+    retrofitVersion = '2.2.0'
+    rxjava2_version = '2.0.1'
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:26.0.2'
+    testImplementation 'junit:junit:4.12'
+
+    //region Support
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:support-v4:${supportLibVersion}"
+    compile "com.android.support:support-annotations:${supportLibVersion}"
+    compile "com.android.support:palette-v7:${supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+    compile "com.android.support.constraint:constraint-layout:1.0.2"
+    compile "com.android.support:support-vector-drawable:${supportLibVersion}"
+    compile "com.android.support:cardview-v7:${supportLibVersion}"
+    //endregion
+    //region Retrofit&Moshi
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+    compile "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.moshi:moshi:1.5.0'
+    //endregion
+    //region Rx
+    compile "io.reactivex.rxjava2:rxjava:$rxjava2_version"
+    compile "io.reactivex.rxjava2:rxandroid:$rxjava2_version"
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    //endregion
+    //region Logging
+    compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
+    compile 'com.orhanobut:logger:1.15'
+    //endregion
+    //region Glide
+    compile "com.github.bumptech.glide:glide:3.8.0"
+    compile "com.github.bumptech.glide:okhttp3-integration:1.4.0@aar"
+    //endregion
+    //region Butterknife
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    //endregion
+    //region Caching
+    compile "com.github.VictorAlbertos.RxCache:runtime:1.8.1-2.x"
+    compile 'com.github.VictorAlbertos.Jolyglot:moshi:0.0.3'
+    //endregion
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'net.jcip:jcip-annotations:1.0'
+    compile 'com.github.rubensousa:gravitysnaphelper:1.3'
+    //region Epoxy
+    compile "com.airbnb.android:epoxy:2.4.0"
+    annotationProcessor 'com.airbnb.android:epoxy-processor:2.4.0'
+    //endregion
+    //region stetho
+    compile "com.facebook.stetho:stetho:1.5.0"
+    compile "com.facebook.stetho:stetho-okhttp3:1.4.2"
+    //endregion
+    compile "com.squareup.picasso:picasso:2.5.2"
+}
