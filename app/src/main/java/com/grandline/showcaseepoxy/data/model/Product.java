@@ -17,8 +17,8 @@ public class Product {
     private String desc;
     @Json(name = "weight")
     private String weight;
-    @Json(name = "tag")
-    private List<String> tag = null;
+    @Json(name = "brands")
+    private String brands;
     @Json(name = "pricing")
     private Pricing pricing;
     @Json(name = "promotions")
@@ -62,15 +62,15 @@ public class Product {
         this.weight = weight;
     }
 
-    /*
-    public List<String> getTag() {
-        return tag;
+
+    public String getBrands() {
+        return brands;
     }
 
-    public void setTag(List<String> tag) {
-        this.tag = tag;
+    public void setBrands(String brands) {
+        this.brands = brands;
     }
-    */
+
     public Pricing getPricing() {
         return pricing;
     }

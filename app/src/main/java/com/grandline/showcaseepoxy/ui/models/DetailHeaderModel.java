@@ -38,7 +38,7 @@ public abstract class DetailHeaderModel extends EpoxyModelWithHolder<DetailHeade
 
     @Override public void bind(ViewHolder holder) {
 
-        holder.brandNameView.setText(product.getTags().get(product.getTags().size()-1));
+        holder.brandNameView.setText(product.getBrands());
         holder.productNameView.setText(product.getName());
 
         if(!isEmpty(product.getPricing().getPrice().toString())){
