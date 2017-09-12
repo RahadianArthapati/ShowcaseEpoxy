@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
     //private CatalogEpoxyController ccontroller = new CatalogEpoxyController(this,recycledViewPool);
     private List<Products> products = new ArrayList<>();
     private CatalogAdapter adapter;
-
+    private Unbinder unbinder;
     @Override
     public void onResponse(Call<ProductsList> call, Response<ProductsList> response) {
         swipeRefreshLayout.setRefreshing(false);
@@ -52,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
         }else{
             Toast.makeText(MainActivity.this,"Response Failed",Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recycledViewPool.clear();
+        unbinder.unbind();
     }
 
     @Override
@@ -93,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         adapter = new CatalogAdapter();
         adapter.setCallback(this);

@@ -21,7 +21,7 @@
             app:contentScrim="@color/light_bluish_grey"
             app:expandedTitleMarginEnd="30dp"
             app:expandedTitleMarginStart="20dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="50"
             app:scrimVisibleHeightTrigger="68dp"
             app:titleEnabled="false">

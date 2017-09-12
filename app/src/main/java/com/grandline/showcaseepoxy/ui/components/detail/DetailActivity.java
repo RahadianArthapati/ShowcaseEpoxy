@@ -44,6 +44,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindString(R.string.article_recommendation_text) String recommendationsTitle;
     @BindString(R.string.article_brand_offer_text) String brandOfferTitle;
     private Unbinder unbinder;
+    private final RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
 
     private DetailAdapter adapter;
     @Override
@@ -90,6 +91,10 @@ public class DetailActivity extends AppCompatActivity {
         adapter.setDetail(product);
 
         int spanCount = ScreenUtils.calculateNoOfColumns(this);
+
+        recycledViewPool.setMaxRecycledViews(R.layout.model_cardview, 50);
+        recyclerView.setRecycledViewPool(recycledViewPool);
+
         adapter.setSpanCount(spanCount);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, spanCount);
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
@@ -100,6 +105,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        recycledViewPool.clear();
         unbinder.unbind();
     }
 }
