@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_work_white_24dp"
+        android:src="@drawable/ic_favorite_border_white_24px"
         app:behavior_autoHide="false"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"

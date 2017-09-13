@@ -92,7 +92,7 @@ public class DetailActivity extends AppCompatActivity {
 
         int spanCount = ScreenUtils.calculateNoOfColumns(this);
 
-        recycledViewPool.setMaxRecycledViews(R.layout.model_cardview, 50);
+        recycledViewPool.setMaxRecycledViews(R.layout.detail_header_view, 5);
         recyclerView.setRecycledViewPool(recycledViewPool);
 
         adapter.setSpanCount(spanCount);

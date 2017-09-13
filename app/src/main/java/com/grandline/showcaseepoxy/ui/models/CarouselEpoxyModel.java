@@ -59,7 +59,7 @@ public abstract class CarouselEpoxyModel<A extends EpoxyAdapter> extends EpoxyMo
 
             LinearLayoutManager layout = new LinearLayoutManager(itemView.getContext());
             layout.setOrientation(LinearLayoutManager.HORIZONTAL);
-            recyclerView.addItemDecoration(new HorizontalCarouselSpacingDecoration());
+            //recyclerView.addItemDecoration(new HorizontalCarouselSpacingDecoration());
             recyclerView.setLayoutManager(layout);
             recyclerView.setHasFixedSize(true);
             SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.START);

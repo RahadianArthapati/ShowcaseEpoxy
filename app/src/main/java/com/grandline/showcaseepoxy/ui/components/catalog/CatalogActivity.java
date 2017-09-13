@@ -5,17 +5,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.data.model.ProductsList;
 import com.grandline.showcaseepoxy.data.service.ProductService;
 import com.grandline.showcaseepoxy.ui.components.detail.DetailActivity;
+import com.grandline.showcaseepoxy.ui.components.subcatalog.SubCatalogActivity;
 import com.grandline.showcaseepoxy.ui.helpers.VerticalGridCardSpacingDecoration;
 import com.grandline.showcaseepoxy.utils.ScreenUtils;
 import com.squareup.moshi.Moshi;
@@ -31,15 +30,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements CatalogAdapter.CatalogCallbacks, Callback<ProductsList>, SwipeRefreshLayout.OnRefreshListener{
+public class CatalogActivity extends AppCompatActivity implements CatalogAdapter.CatalogCallbacks, Callback<ProductsList>, SwipeRefreshLayout.OnRefreshListener{
     @BindView(R.id.products_rv)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private final RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
-    //private final CatalogController controller = new CatalogController(this, recycledViewPool);
-    //private CatalogEpoxyController ccontroller = new CatalogEpoxyController(this,recycledViewPool);
     private List<Products> products = new ArrayList<>();
     private CatalogAdapter adapter;
     private Unbinder unbinder;
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
             products = response.body().getProducts();
             adapter.setCatalog(products);
         }else{
-            Toast.makeText(MainActivity.this,"Response Failed",Toast.LENGTH_LONG).show();
+            Toast.makeText(CatalogActivity.this,"Response Failed",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -65,13 +62,13 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
     @Override
     public void onFailure(Call<ProductsList> call, Throwable t) {
         swipeRefreshLayout.setRefreshing(false);
-        Toast.makeText(MainActivity.this,t.getMessage().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(CatalogActivity.this,t.getMessage().toString(),Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onCatalogClicked(Product product) {
         String productJson = new Moshi.Builder().build().adapter(Product.class).toJson(product);
-        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        Intent intent = new Intent(CatalogActivity.this, DetailActivity.class);
         intent.putExtra("product_detail", productJson);
         startActivity(intent);
     }
@@ -88,7 +85,17 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
 
     @Override
     public void onShowMoreClicked(String category) {
-        Toast.makeText(MainActivity.this,category,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(CatalogActivity.this,category,Toast.LENGTH_SHORT).show();
+        Products p = new Products();
+        for(int i=0;i<products.size();i++){
+            if(products.get(i).getCategory().equalsIgnoreCase(category)){
+                p.setProduct(products.get(i).getProduct());
+            }
+        }
+        String productJson = new Moshi.Builder().build().adapter(Products.class).toJson(p);
+        Intent intent = new Intent(CatalogActivity.this, SubCatalogActivity.class);
+        intent.putExtra("products", productJson);
+        startActivity(intent);
     }
 
     @Override
@@ -100,12 +107,14 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_catalog);
         unbinder = ButterKnife.bind(this);
 
         adapter = new CatalogAdapter();
         adapter.setCallback(this);
-        recycledViewPool.setMaxRecycledViews(R.layout.model_cardview, 50);
+        recycledViewPool.setMaxRecycledViews(R.layout.product_card_view, 100);
+        recycledViewPool.setMaxRecycledViews(R.layout.product_header_view, 10);
+        recycledViewPool.setMaxRecycledViews(R.layout.product_footer_view,10);
         recyclerView.setRecycledViewPool(recycledViewPool);
 
 
@@ -113,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements CatalogAdapter.Ca
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, ScreenUtils.calculateNoOfColumns(this));
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());
         recyclerView.setLayoutManager(gridLayoutManager);
-        //recyclerView.addItemDecoration(new VerticalGridCardSpacingDecoration());
+        recyclerView.addItemDecoration(new VerticalGridCardSpacingDecoration());
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(this);
 

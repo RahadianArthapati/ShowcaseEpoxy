@@ -5,7 +5,9 @@ import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.ui.models.CarouselEpoxyModel_;
 import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
-import com.grandline.showcaseepoxy.ui.models.ProductHeaderModel;
+import com.grandline.showcaseepoxy.ui.models.ProductFooterModel;
+import com.grandline.showcaseepoxy.ui.models.ProductFooterModel_;
+
 import com.grandline.showcaseepoxy.ui.models.ProductHeaderModel_;
 
 import java.util.List;
@@ -15,8 +17,7 @@ import java.util.List;
  */
 
 public class CatalogAdapter extends EpoxyAdapter {
-    //private final TitleModel_ titleModel = new TitleModel_();
-    //private final CarouselEpoxyModel_<CarouselAdapter> carouselModel = new CarouselEpoxyModel_<CarouselAdapter>();
+
     public interface CatalogCallbacks{
         void onCatalogClicked(Product product);
         void onCatalogLongClicked(int position);
@@ -29,7 +30,7 @@ public class CatalogAdapter extends EpoxyAdapter {
             callback.onCatalogClicked(model.product);
         }
     };
-    private ProductHeaderModel.OnModelClick onHeaderItemClick = new ProductHeaderModel.OnModelClick() {
+    private ProductFooterModel.OnModelClick onFooterItemClick = new ProductFooterModel.OnModelClick() {
         @Override
         public void onClick(String category) {
             callback.onShowMoreClicked(category);
@@ -39,12 +40,9 @@ public class CatalogAdapter extends EpoxyAdapter {
         models.clear();
         for (int i=0;i<products.size();i++) {
             CarouselAdapter carouselAdapter = new CarouselAdapter(products.get(i).getProduct(), onCarouselItemClick);
-            models.add(new ProductHeaderModel_().title(products.get(i).getCategory()).clickListener(onHeaderItemClick));
+            models.add(new ProductHeaderModel_().title(products.get(i).getCategory()).count(products.get(i).getProduct().size()));
             models.add(new CarouselEpoxyModel_<CarouselAdapter>().adapter(carouselAdapter));
-            //addModels(new TitleModel_().title(products.get(i).getCategory()),
-            //        new CarouselEpoxyModel_<CarouselAdapter>().adapter(carouselAdapter));
-            //titleModel.title(products.get(i).getCategory());
-            //carouselModel.adapter(carouselAdapter);
+            models.add(new ProductFooterModel_().title(products.get(i).getCategory()).clickListener(onFooterItemClick));
         }
         notifyModelsChanged();
     }
@@ -54,6 +52,5 @@ public class CatalogAdapter extends EpoxyAdapter {
 
     public CatalogAdapter() {
         enableDiffing();
-        //addModels(titleModel,carouselModel);
     }
 }

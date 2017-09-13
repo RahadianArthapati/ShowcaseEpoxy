@@ -11,15 +11,15 @@ import com.grandline.showcaseepoxy.ui.models.base.BaseEpoxyHolder;
 import butterknife.BindView;
 
 /**
- * Created by home on 9/8/17.
+ * Created by home on 9/13/17.
  */
-@EpoxyModelClass(layout = R.layout.product_header_view)
+@EpoxyModelClass(layout = R.layout.product_footer_view)
 
-public abstract class ProductHeaderModel extends EpoxyModelWithHolder<ProductHeaderModel.ViewHolder> {
+public abstract class ProductFooterModel extends EpoxyModelWithHolder<ProductFooterModel.ViewHolder> {
     @EpoxyAttribute
     String title;
-    @EpoxyAttribute
-    int count;
+    @EpoxyAttribute(hash = false)
+    ProductFooterModel.OnModelClick clickListener;
 
     @Override
     public int getSpanSize(int totalSpanCount, int position, int itemCount) {
@@ -27,15 +27,15 @@ public abstract class ProductHeaderModel extends EpoxyModelWithHolder<ProductHea
     }
 
     @Override
-    public void bind(ProductHeaderModel.ViewHolder holder) {
+    public void bind(ProductFooterModel.ViewHolder holder) {
         super.bind(holder);
-        holder.titleView.setText(title);
-        holder.countView.setText((count>1)?String.valueOf(count)+" products":String.valueOf(count+" product"));
+        holder.showMoreView.setOnClickListener(v->clickListener.onClick(title));
     }
     public static class ViewHolder extends BaseEpoxyHolder {
-        @BindView(R.id.title_text)
-        TextView titleView;
-        @BindView(R.id.count_text)
-        TextView countView;
+        @BindView(R.id.show_more_text)
+        TextView showMoreView;
+    }
+    public interface OnModelClick {
+        void onClick(String category);
     }
 }
