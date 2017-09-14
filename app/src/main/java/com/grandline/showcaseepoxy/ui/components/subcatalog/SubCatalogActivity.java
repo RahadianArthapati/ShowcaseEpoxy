@@ -2,8 +2,6 @@ package com.grandline.showcaseepoxy.ui.components.subcatalog;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,14 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
-import com.grandline.showcaseepoxy.ui.components.catalog.CatalogAdapter;
 import com.grandline.showcaseepoxy.ui.components.detail.DetailActivity;
-import com.grandline.showcaseepoxy.ui.helpers.VerticalGridCardSpacingDecoration;
 import com.grandline.showcaseepoxy.utils.ScreenUtils;
 import com.squareup.moshi.Moshi;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,8 +32,6 @@ public class SubCatalogActivity extends AppCompatActivity implements SwipeRefres
     SwipeRefreshLayout swipeRefreshLayout;
 
     private final RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
-
-    private List<Product> product = new ArrayList<>();
     private SubCatalogAdapter adapter;
     private Unbinder unbinder;
 
@@ -81,12 +73,11 @@ public class SubCatalogActivity extends AppCompatActivity implements SwipeRefres
         adapter = new SubCatalogAdapter();
         adapter.setCallback(this);
         recycledViewPool.setMaxRecycledViews(R.layout.product_card_view, 50);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_holder_carousel, 5);
         recycledViewPool.setMaxRecycledViews(R.layout.product_card_view_full, 5);
         recyclerView.setRecycledViewPool(recycledViewPool);
 
-
         adapter.setSpanCount(ScreenUtils.calculateNoOfColumns(this));
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(this, ScreenUtils.calculateNoOfColumns(this), LinearLayoutManager.VERTICAL);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,ScreenUtils.calculateNoOfColumns(this),LinearLayoutManager.VERTICAL,false);
 
         gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup());

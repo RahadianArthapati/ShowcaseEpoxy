@@ -1,19 +1,12 @@
 package com.grandline.showcaseepoxy.ui.components.subcatalog;
 
-import android.support.v7.app.AppCompatActivity;
-
 import com.airbnb.epoxy.EpoxyAdapter;
 import com.grandline.showcaseepoxy.data.model.Product;
-import com.grandline.showcaseepoxy.data.model.Products;
-import com.grandline.showcaseepoxy.ui.components.catalog.CarouselAdapter;
-import com.grandline.showcaseepoxy.ui.components.catalog.CatalogAdapter;
-import com.grandline.showcaseepoxy.ui.models.CarouselEpoxyModel_;
+import com.grandline.showcaseepoxy.ui.models.BaseEpoxyModel_;
 import com.grandline.showcaseepoxy.ui.models.ProductCardFullModel;
-import com.grandline.showcaseepoxy.ui.models.ProductCardFullModel_;
 import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
 import com.grandline.showcaseepoxy.ui.models.ProductCardModel_;
-import com.grandline.showcaseepoxy.ui.models.ProductHeaderModel;
-import com.grandline.showcaseepoxy.ui.models.ProductHeaderModel_;
+
 
 import java.util.List;
 
@@ -43,7 +36,7 @@ public class SubCatalogAdapter extends EpoxyAdapter {
         for (int i=0;i<p.size();i++) {
             if(i!=0 && i%6==0){
                 CardFullAdapter cardFullAdapter = new CardFullAdapter(p.get(i), onProductCardFullItemClick);
-                models.add(new CarouselEpoxyModel_<CardFullAdapter>().adapter(cardFullAdapter));
+                models.add(new BaseEpoxyModel_<CardFullAdapter>().adapter(cardFullAdapter));
 
             }else{
                 models.add(new ProductCardModel_().product(p.get(i)).clickListener(onProductCardItemClick));

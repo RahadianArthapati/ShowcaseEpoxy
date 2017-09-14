@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.view.Gravity;
 import android.widget.Toast;
 
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
@@ -16,6 +19,7 @@ import com.grandline.showcaseepoxy.data.service.ProductService;
 import com.grandline.showcaseepoxy.ui.components.detail.DetailActivity;
 import com.grandline.showcaseepoxy.ui.components.subcatalog.SubCatalogActivity;
 import com.grandline.showcaseepoxy.ui.helpers.VerticalGridCardSpacingDecoration;
+import com.grandline.showcaseepoxy.utils.Constants;
 import com.grandline.showcaseepoxy.utils.ScreenUtils;
 import com.squareup.moshi.Moshi;
 
@@ -51,18 +55,17 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
             Toast.makeText(CatalogActivity.this,"Response Failed",Toast.LENGTH_LONG).show();
         }
     }
+    @Override
+    public void onFailure(Call<ProductsList> call, Throwable t) {
+        swipeRefreshLayout.setRefreshing(false);
+        Toast.makeText(CatalogActivity.this,t.getMessage().toString(),Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         recycledViewPool.clear();
         unbinder.unbind();
-    }
-
-    @Override
-    public void onFailure(Call<ProductsList> call, Throwable t) {
-        swipeRefreshLayout.setRefreshing(false);
-        Toast.makeText(CatalogActivity.this,t.getMessage().toString(),Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -124,21 +127,21 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.addItemDecoration(new VerticalGridCardSpacingDecoration());
         recyclerView.setAdapter(adapter);
-        swipeRefreshLayout.setOnRefreshListener(this);
+        SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.TOP);
+        snapHelperStart.attachToRecyclerView(recyclerView);
 
+        swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-
         getProduct();
 
     }
-
     private void getProduct(){
         swipeRefreshLayout.setRefreshing(true);
         ProductService.getApi()
-                .fetchProductsList()
+                .fetchProductsList(Constants.CATEGORY_BEVERAGES)
                 .enqueue(this);
     }
 

@@ -13,6 +13,6 @@ import retrofit2.Call;
 
 public interface CacheProviders
 {
-    @LifeCache(duration = 5, timeUnit = TimeUnit.MINUTES)
+    @LifeCache(duration = 1, timeUnit = TimeUnit.HOURS)
     Call<ProductsList> fetchProductsList(Call<ProductsList> fetchProductsListCall);
 }

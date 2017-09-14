@@ -5,8 +5,7 @@ import com.airbnb.epoxy.EpoxyAdapter;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
 import com.grandline.showcaseepoxy.ui.models.ProductCardModel_;
-import com.grandline.showcaseepoxy.ui.models.ThumbnailModel;
-import com.grandline.showcaseepoxy.ui.models.ThumbnailModel_;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
