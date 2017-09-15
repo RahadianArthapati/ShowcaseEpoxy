@@ -1,5 +1,6 @@
 package com.grandline.showcaseepoxy.data.service;
 
+import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.data.model.ProductsList;
 
 import java.util.concurrent.TimeUnit;
@@ -14,5 +15,5 @@ import retrofit2.Call;
 public interface CacheProviders
 {
     @LifeCache(duration = 1, timeUnit = TimeUnit.HOURS)
-    Call<ProductsList> fetchProductsList(Call<ProductsList> fetchProductsListCall);
+    Call<Products> fetchProducts(Call<Products> fetchProductsCall);
 }

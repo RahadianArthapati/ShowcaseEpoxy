@@ -2,10 +2,7 @@ package com.grandline.showcaseepoxy.data.source;
 
 import com.grandline.showcaseepoxy.data.model.ProductsList;
 
-import java.util.List;
-
-import io.reactivex.Observable;
-import retrofit2.Response;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -15,5 +12,5 @@ import retrofit2.http.Path;
 
 public interface ProductService {
     @GET("/stores/{category}")
-    Observable<Response<ProductsList>> fetchProductsList(@Path("category") String category);
+    Call<ProductsList> fetchProducts(@Path("category") String category);
 }

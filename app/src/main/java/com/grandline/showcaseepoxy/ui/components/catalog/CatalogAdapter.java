@@ -4,6 +4,7 @@ import com.airbnb.epoxy.EpoxyAdapter;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.ui.models.BaseEpoxyModel_;
+import com.grandline.showcaseepoxy.ui.models.HorizontalLineModel_;
 import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
 import com.grandline.showcaseepoxy.ui.models.ProductFooterModel;
 import com.grandline.showcaseepoxy.ui.models.ProductFooterModel_;
@@ -22,7 +23,7 @@ public class CatalogAdapter extends EpoxyAdapter {
     public interface CatalogCallbacks{
         void onCatalogClicked(Product product);
         void onCatalogLongClicked(int position);
-        void onAddtoCartClicked(int position);
+        void onAddToCartClicked(int position);
         void onShowMoreClicked(String category);
     }
     private CatalogCallbacks callback;
@@ -37,21 +38,23 @@ public class CatalogAdapter extends EpoxyAdapter {
             callback.onShowMoreClicked(category);
         }
     };
-    public void setCatalog(List<Products> products) {
+    public void setCatalog(Products products) {
         models.clear();
-        for (int i=0;i<products.size();i++) {
-            CarouselAdapter carouselAdapter = new CarouselAdapter(products.get(i).getProduct(), onCarouselItemClick);
-            models.add(new ProductHeaderModel_().title(products.get(i).getCategory()).count(products.get(i).getProduct().size()));
-            models.add(new BaseEpoxyModel_<CarouselAdapter>().adapter(carouselAdapter));
-            models.add(new ProductFooterModel_().title(products.get(i).getCategory()).clickListener(onFooterItemClick));
-        }
-        notifyModelsChanged();
+        CarouselAdapter carouselAdapter = new CarouselAdapter(products.getProduct(), onCarouselItemClick);
+        models.add(new ProductHeaderModel_().title(products.getCategory()).count(products.getProduct().size()));
+        models.add(new BaseEpoxyModel_<CarouselAdapter>().adapter(carouselAdapter));
+        models.add(new HorizontalLineModel_());
+        models.add(new ProductFooterModel_().title(products.getCategory()).clickListener(onFooterItemClick));
+
+        //notifyModelsChanged();
     }
     public void setCallback(CatalogCallbacks callback) {
         this.callback = callback;
     }
 
+    /*
     public CatalogAdapter() {
         enableDiffing();
     }
+    */
 }

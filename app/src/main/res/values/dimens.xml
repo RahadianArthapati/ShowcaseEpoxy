@@ -20,8 +20,8 @@
     <dimen name="card_album_radius">0dp</dimen>
     <dimen name="cover_height">100dp</dimen>
     <dimen name="card_full_height">230dp</dimen>
-    <dimen name="card_height">280dp</dimen>
-    <dimen name="card_width">110dp</dimen>
+    <dimen name="card_height">250dp</dimen>
+    <dimen name="card_width">100dp</dimen>
     <dimen name="title_padding">10dp</dimen>
     <dimen name="title">15sp</dimen>
     <dimen name="subtitle">12sp</dimen>

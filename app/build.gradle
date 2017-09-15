@@ -61,6 +61,11 @@ dependencies {
     compile "io.reactivex.rxjava2:rxandroid:$rxjava2_version"
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //endregion
+    //region Dependency Injection
+    annotationProcessor 'com.squareup:javapoet:1.9.0'
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    //endregion
     //region Logging
     compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
     compile 'com.orhanobut:logger:1.15'
@@ -89,4 +94,5 @@ dependencies {
     compile "com.facebook.stetho:stetho-okhttp3:1.4.2"
     //endregion
     compile "com.squareup.picasso:picasso:2.5.2"
+    compile 'com.jakewharton.timber:timber:4.5.1'
 }

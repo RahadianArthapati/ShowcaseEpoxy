@@ -1,10 +1,9 @@
 package com.grandline.showcaseepoxy.data.source;
 
 
-
-import com.grandline.showcaseepoxy.data.model.ProductsList;
-
-import io.reactivex.Observable;
+import com.grandline.showcaseepoxy.data.model.Products;
+import java.util.List;
+import io.reactivex.Single;
 import io.rx_cache2.Reply;
 
 /**
@@ -12,5 +11,5 @@ import io.rx_cache2.Reply;
  */
 
 public interface ProductDataSource {
-    Observable<Reply<ProductsList>> fetchProductsList(String category, boolean evict);
+    //Single<Reply<List<Products>>> fetchProducts(String category, boolean evict);
 }

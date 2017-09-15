@@ -12,8 +12,8 @@ import android.view.View;
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 
 public class HorizontalCarouselSpacingDecoration extends ItemDecoration {
-    private static final int EDGE_PADDING_DP = 16;
-    private static final int INNER_PADDING_DP = 8;
+    private static final int EDGE_PADDING_DP = 4;
+    private static final int INNER_PADDING_DP = 4;
     private int edgePadding = -1;
     private int innerPadding = -1;
 

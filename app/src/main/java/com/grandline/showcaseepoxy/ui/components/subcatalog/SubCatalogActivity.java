@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.view.Gravity;
 
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
@@ -84,6 +87,9 @@ public class SubCatalogActivity extends AppCompatActivity implements SwipeRefres
         recyclerView.setLayoutManager(gridLayoutManager);
         //recyclerView.addItemDecoration(new VerticalGridCardSpacingDecoration());
         recyclerView.setAdapter(adapter);
+        SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.TOP);
+        snapHelperStart.attachToRecyclerView(recyclerView);
+
         swipeRefreshLayout.setOnRefreshListener(this);
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,

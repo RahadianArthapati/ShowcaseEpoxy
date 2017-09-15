@@ -11,11 +11,14 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
+import com.grandline.showcaseepoxy.BuildConfig;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.data.model.ProductsList;
 import com.grandline.showcaseepoxy.data.service.ProductService;
+import com.grandline.showcaseepoxy.data.source.ProductDataSource;
+import com.grandline.showcaseepoxy.data.source.ProductRepository;
 import com.grandline.showcaseepoxy.ui.components.detail.DetailActivity;
 import com.grandline.showcaseepoxy.ui.components.subcatalog.SubCatalogActivity;
 import com.grandline.showcaseepoxy.ui.helpers.VerticalGridCardSpacingDecoration;
@@ -23,6 +26,7 @@ import com.grandline.showcaseepoxy.utils.Constants;
 import com.grandline.showcaseepoxy.utils.ScreenUtils;
 import com.squareup.moshi.Moshi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,9 +34,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.exceptions.CompositeException;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class CatalogActivity extends AppCompatActivity implements CatalogAdapter.CatalogCallbacks, Callback<ProductsList>, SwipeRefreshLayout.OnRefreshListener{
     @BindView(R.id.products_rv)
@@ -44,13 +54,14 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
     private List<Products> products = new ArrayList<>();
     private CatalogAdapter adapter;
     private Unbinder unbinder;
+
     @Override
     public void onResponse(Call<ProductsList> call, Response<ProductsList> response) {
         swipeRefreshLayout.setRefreshing(false);
         if(response.isSuccessful()){
             products = Collections.emptyList();
             products = response.body().getProducts();
-            adapter.setCatalog(products);
+            //adapter.setCatalog(products);
         }else{
             Toast.makeText(CatalogActivity.this,"Response Failed",Toast.LENGTH_LONG).show();
         }
@@ -82,7 +93,7 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
     }
 
     @Override
-    public void onAddtoCartClicked(int position) {
+    public void onAddToCartClicked(int position) {
 
     }
 
@@ -103,8 +114,8 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
 
     @Override
     public void onRefresh() {
-
-        getProduct();
+        getProducts(Constants.CATEGORY_BEVERAGES);
+        //getProduct();
     }
 
     @Override
@@ -112,6 +123,10 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
         unbinder = ButterKnife.bind(this);
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
 
         adapter = new CatalogAdapter();
         adapter.setCallback(this);
@@ -127,15 +142,13 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.addItemDecoration(new VerticalGridCardSpacingDecoration());
         recyclerView.setAdapter(adapter);
-        SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.TOP);
-        snapHelperStart.attachToRecyclerView(recyclerView);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-        getProduct();
+        getProducts(Constants.CATEGORY_BEVERAGES);
 
     }
     private void getProduct(){
@@ -143,6 +156,28 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
         ProductService.getApi()
                 .fetchProductsList(Constants.CATEGORY_BEVERAGES)
                 .enqueue(this);
+    }
+    private void getProducts(String category){
+        ProductRepository productRepository = ProductRepository.getInstance(this);
+        /*
+        productRepository.fetchProducts(category,true)
+                .subscribeOn(Schedulers.io())
+                .map(reply -> reply.getData())
+                .filter(p -> p.size()>0)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data -> {
+                    swipeRefreshLayout.setRefreshing(false);
+                    products = data;
+                    adapter.setCatalog(products);},
+                throwable -> {
+                    swipeRefreshLayout.setRefreshing(false);
+                    Timber.e(throwable);
+                    if (throwable instanceof IOException
+                            || throwable instanceof CompositeException
+                            || throwable instanceof HttpException)
+                        Timber.e("Network error");
+                });
+           */
     }
 
 }

@@ -1,33 +1,29 @@
 package com.grandline.showcaseepoxy.ui.models;
 
-
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.airbnb.epoxy.EpoxyAdapter;
 import com.airbnb.epoxy.EpoxyAttribute;
 import com.airbnb.epoxy.EpoxyModelClass;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
-import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.grandline.showcaseepoxy.R;
-import com.grandline.showcaseepoxy.ui.helpers.HorizontalCarouselSpacingDecoration;
 import com.grandline.showcaseepoxy.ui.models.base.BaseEpoxyHolder;
-import com.grandline.showcaseepoxy.utils.RecyclerState;
 
-
-import butterknife.BindString;
 import butterknife.BindView;
 
-@EpoxyModelClass(layout = R.layout.view_holder_carousel)
+/**
+ * Created by home on 9/15/17.
+ */
+@EpoxyModelClass(layout = R.layout.special_card_view_holder)
 
-public abstract class BaseEpoxyModel<A extends EpoxyAdapter> extends EpoxyModelWithHolder<BaseEpoxyModel.RecyclerHolder> {
+public abstract class SpecialsCardHolder<A extends EpoxyAdapter> extends EpoxyModelWithHolder<SpecialsCardHolder.RecyclerHolder>{
 
     @EpoxyAttribute
     A adapter;
-
 
     @Override
     public boolean shouldSaveViewState() {
@@ -40,34 +36,31 @@ public abstract class BaseEpoxyModel<A extends EpoxyAdapter> extends EpoxyModelW
     }
 
     @Override
-    public void bind(RecyclerHolder holder) {
+    public void bind(SpecialsCardHolder.RecyclerHolder holder) {
         super.bind(holder);
         holder.recyclerView.swapAdapter(adapter, false);
 
     }
 
     @Override
-    public void unbind(RecyclerHolder holder) {
+    public void unbind(SpecialsCardHolder.RecyclerHolder holder) {
         super.unbind(holder);
         holder.recyclerView.swapAdapter(null,true);
 
     }
 
-    static class RecyclerHolder extends BaseEpoxyHolder {
-        @BindView(R.id.recycler)
+    static class RecyclerHolder extends BaseEpoxyHolder{
+        @BindView(R.id.recycler_special)
         RecyclerView recyclerView;
 
         @Override
         protected void bindView(View itemView) {
             super.bindView(itemView);
-            LinearLayoutManager layout2 = new LinearLayoutManager(itemView.getContext());
-            layout2.setOrientation(LinearLayoutManager.HORIZONTAL);
-            recyclerView.addItemDecoration(new HorizontalCarouselSpacingDecoration());
-            recyclerView.setLayoutManager(layout2);
+            //GridLayoutManager layout = new GridLayoutManager(itemView.getContext(), LinearLayoutManager.VERTICAL,2,false);
+            LinearLayoutManager layout = new LinearLayoutManager(itemView.getContext());
+            layout.setOrientation(LinearLayout.VERTICAL);
+            recyclerView.setLayoutManager(layout);
             recyclerView.setHasFixedSize(true);
-            SnapHelper snapHelperStart = new GravitySnapHelper(Gravity.START);
-            snapHelperStart.attachToRecyclerView(recyclerView);
-
         }
     }
 }

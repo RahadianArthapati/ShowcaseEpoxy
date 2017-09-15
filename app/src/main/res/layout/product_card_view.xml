@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="bottom|center"
-            android:padding="20dip"
+            android:padding="15dip"
             android:background="@color/light_grey"
             android:textColor="@color/bright_red"
             android:textStyle="bold"
