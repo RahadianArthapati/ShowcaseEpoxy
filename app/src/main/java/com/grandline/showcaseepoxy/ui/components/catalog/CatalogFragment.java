@@ -1,5 +1,6 @@
 package com.grandline.showcaseepoxy.ui.components.catalog;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,9 +11,12 @@ import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.ui.components.base.BaseFragment;
+import com.grandline.showcaseepoxy.ui.components.detail.DetailActivity;
+import com.grandline.showcaseepoxy.ui.components.subcatalog.SubCatalogActivity;
 import com.grandline.showcaseepoxy.ui.helpers.VerticalGridCardSpacingDecoration;
 import com.grandline.showcaseepoxy.utils.Constants;
 import com.grandline.showcaseepoxy.utils.ScreenUtils;
+import com.squareup.moshi.Moshi;
 
 import java.util.List;
 
@@ -71,8 +75,8 @@ public class CatalogFragment extends BaseFragment implements CatalogAdapter.Cata
     }
 
     @Override
-    public void onShowMoreClicked(String category) {
-        navigateToSubCatalogScreen(category);
+    public void onShowMoreClicked(Products products) {
+        navigateToSubCatalogScreen(products);
     }
 
     @Override
@@ -85,7 +89,7 @@ public class CatalogFragment extends BaseFragment implements CatalogAdapter.Cata
     @Override
     public void initialize() {
         adapter = new SpecialAdapter();
-        //adapter.setCallback(this);
+        adapter.setCallback(this);
         recycledViewPool.setMaxRecycledViews(R.layout.product_card_view, 100);
         recycledViewPool.setMaxRecycledViews(R.layout.product_header_view, 10);
         recycledViewPool.setMaxRecycledViews(R.layout.product_footer_view,10);
@@ -113,12 +117,19 @@ public class CatalogFragment extends BaseFragment implements CatalogAdapter.Cata
 
     @Override
     public void navigateToDetailsScreen(Product product) {
-        Snackbar.make(swipeRefreshLayout,product.getName(),Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(swipeRefreshLayout,product.getName(),Snackbar.LENGTH_SHORT).show();
+        String productJson = new Moshi.Builder().build().adapter(Product.class).toJson(product);
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra("product_detail", productJson);
+        startActivity(intent);
     }
 
     @Override
-    public void navigateToSubCatalogScreen(String subcategory) {
-
+    public void navigateToSubCatalogScreen(Products products) {
+        String productJson = new Moshi.Builder().build().adapter(Products.class).toJson(products);
+        Intent intent = new Intent(getActivity(), SubCatalogActivity.class);
+        intent.putExtra("products", productJson);
+        startActivity(intent);
     }
 
     @Override

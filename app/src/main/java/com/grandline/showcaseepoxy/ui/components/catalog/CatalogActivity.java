@@ -98,8 +98,9 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
     }
 
     @Override
-    public void onShowMoreClicked(String category) {
+    public void onShowMoreClicked(Products products) {
         //Toast.makeText(CatalogActivity.this,category,Toast.LENGTH_SHORT).show();
+        /*
         Products p = new Products();
         for(int i=0;i<products.size();i++){
             if(products.get(i).getCategory().equalsIgnoreCase(category)){
@@ -110,6 +111,7 @@ public class CatalogActivity extends AppCompatActivity implements CatalogAdapter
         Intent intent = new Intent(CatalogActivity.this, SubCatalogActivity.class);
         intent.putExtra("products", productJson);
         startActivity(intent);
+        */
     }
 
     @Override

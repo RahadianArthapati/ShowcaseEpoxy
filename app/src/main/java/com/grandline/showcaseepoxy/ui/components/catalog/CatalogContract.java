@@ -22,7 +22,7 @@ public class CatalogContract {
 
         void navigateToDetailsScreen(Product product);
 
-        void navigateToSubCatalogScreen(String subcategory);
+        void navigateToSubCatalogScreen(Products products);
 
         void setNoDataVisibility(boolean isVisible);
 

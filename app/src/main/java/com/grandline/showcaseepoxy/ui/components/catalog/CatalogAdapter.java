@@ -24,7 +24,7 @@ public class CatalogAdapter extends EpoxyAdapter {
         void onCatalogClicked(Product product);
         void onCatalogLongClicked(int position);
         void onAddToCartClicked(int position);
-        void onShowMoreClicked(String category);
+        void onShowMoreClicked(Products products);
     }
     private CatalogCallbacks callback;
     private ProductCardModel.OnModelClick onCarouselItemClick = new ProductCardModel.OnModelClick() {
@@ -34,8 +34,8 @@ public class CatalogAdapter extends EpoxyAdapter {
     };
     private ProductFooterModel.OnModelClick onFooterItemClick = new ProductFooterModel.OnModelClick() {
         @Override
-        public void onClick(String category) {
-            callback.onShowMoreClicked(category);
+        public void onClick(Products products) {
+            callback.onShowMoreClicked(products);
         }
     };
     public void setCatalog(Products products) {
@@ -44,7 +44,7 @@ public class CatalogAdapter extends EpoxyAdapter {
         models.add(new ProductHeaderModel_().title(products.getCategory()).count(products.getProduct().size()));
         models.add(new BaseEpoxyModel_<CarouselAdapter>().adapter(carouselAdapter));
         models.add(new HorizontalLineModel_());
-        models.add(new ProductFooterModel_().title(products.getCategory()).clickListener(onFooterItemClick));
+        models.add(new ProductFooterModel_().products(products).clickListener(onFooterItemClick));
 
         //notifyModelsChanged();
     }

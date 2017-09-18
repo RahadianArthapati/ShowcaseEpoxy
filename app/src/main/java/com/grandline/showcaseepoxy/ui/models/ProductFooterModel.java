@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyAttribute;
 import com.airbnb.epoxy.EpoxyModelClass;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
 import com.grandline.showcaseepoxy.R;
+import com.grandline.showcaseepoxy.data.model.Products;
 import com.grandline.showcaseepoxy.ui.models.base.BaseEpoxyHolder;
 
 import butterknife.BindView;
@@ -17,7 +18,7 @@ import butterknife.BindView;
 
 public abstract class ProductFooterModel extends EpoxyModelWithHolder<ProductFooterModel.ViewHolder> {
     @EpoxyAttribute
-    String title;
+    Products products;
     @EpoxyAttribute(hash = false)
     ProductFooterModel.OnModelClick clickListener;
 
@@ -29,13 +30,13 @@ public abstract class ProductFooterModel extends EpoxyModelWithHolder<ProductFoo
     @Override
     public void bind(ProductFooterModel.ViewHolder holder) {
         super.bind(holder);
-        holder.showMoreView.setOnClickListener(v->clickListener.onClick(title));
+        holder.showMoreView.setOnClickListener(v->clickListener.onClick(products));
     }
     public static class ViewHolder extends BaseEpoxyHolder {
         @BindView(R.id.show_more_text)
         TextView showMoreView;
     }
     public interface OnModelClick {
-        void onClick(String category);
+        void onClick(Products products);
     }
 }

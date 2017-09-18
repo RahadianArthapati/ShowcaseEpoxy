@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class SpecialAdapter extends EpoxyAdapter {
-
+    private CatalogAdapter.CatalogCallbacks callback;
     public SpecialAdapter() {
         enableDiffing();
     }
@@ -23,8 +23,12 @@ public class SpecialAdapter extends EpoxyAdapter {
         for (int i=0;i<products.size();i++) {
             CatalogAdapter adapter = new CatalogAdapter();
             adapter.setCatalog(products.get(i));
+            adapter.setCallback(callback);
             models.add(new SpecialsCardHolder_<CatalogAdapter>().adapter(adapter));
         }
         notifyModelsChanged();
+    }
+    public void setCallback(CatalogAdapter.CatalogCallbacks callback) {
+        this.callback = callback;
     }
 }
