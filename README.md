@@ -5,6 +5,6 @@
 
 I am using mockup API provided by [`Apiary`](https://apiary.io/)
 
-![alt text](https://github.com/RahadianArthapati/ShowcaseEpoxy/blob/mvp/images/Screenshot_1.jpg "Screenshot 1")
-![alt text](https://github.com/RahadianArthapati/ShowcaseEpoxy/blob/mvp/images/Screenshot_2.jpg "Screenshot 2")
-![alt text](https://github.com/RahadianArthapati/ShowcaseEpoxy/blob/mvp/images/Screenshot_3.jpg "Screenshot 3")
+![Screenshot 1](images/Screenshot_1.jpg?raw=true)
+![Screenshot 2](https://github.com/RahadianArthapati/ShowcaseEpoxy/blob/mvp/images/Screenshot_2.jpg "Screenshot 2")
+![Screenshot 3](https://github.com/RahadianArthapati/ShowcaseEpoxy/blob/mvp/images/Screenshot_3.jpg "Screenshot 3")
