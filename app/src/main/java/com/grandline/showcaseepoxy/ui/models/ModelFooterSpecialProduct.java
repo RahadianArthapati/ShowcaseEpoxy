@@ -7,6 +7,7 @@ import com.airbnb.epoxy.EpoxyModelClass;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Products;
+import com.grandline.showcaseepoxy.data.model.Special;
 import com.grandline.showcaseepoxy.ui.models.base.BaseEpoxyHolder;
 
 import butterknife.BindView;
@@ -14,13 +15,11 @@ import butterknife.BindView;
 /**
  * Created by home on 9/13/17.
  */
-@EpoxyModelClass(layout = R.layout.product_footer_view)
+@EpoxyModelClass(layout = R.layout.view_footer_product)
 
-public abstract class ProductFooterModel extends EpoxyModelWithHolder<ProductFooterModel.ViewHolder> {
-    @EpoxyAttribute
-    Products products;
+public abstract class ModelFooterSpecialProduct extends EpoxyModelWithHolder<ModelFooterSpecialProduct.ViewHolder> {
     @EpoxyAttribute(hash = false)
-    ProductFooterModel.OnModelClick clickListener;
+    ModelFooterSpecialProduct.OnModelClick clickListener;
 
     @Override
     public int getSpanSize(int totalSpanCount, int position, int itemCount) {
@@ -28,15 +27,15 @@ public abstract class ProductFooterModel extends EpoxyModelWithHolder<ProductFoo
     }
 
     @Override
-    public void bind(ProductFooterModel.ViewHolder holder) {
+    public void bind(ModelFooterSpecialProduct.ViewHolder holder) {
         super.bind(holder);
-        holder.showMoreView.setOnClickListener(v->clickListener.onClick(products));
+        holder.showMoreView.setOnClickListener(v->clickListener.onClick());
     }
     public static class ViewHolder extends BaseEpoxyHolder {
         @BindView(R.id.show_more_text)
         TextView showMoreView;
     }
     public interface OnModelClick {
-        void onClick(Products products);
+        void onClick();
     }
 }

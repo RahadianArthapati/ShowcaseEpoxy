@@ -9,4 +9,6 @@ public class Constants {
     public static final String BASE_URL = "http://private-563d21-grandline.apiary-mock.com/";
     public static final String IMG_URL = "https://s3-ap-southeast-1.amazonaws.com/media.redmart.com/newmedia/1600x";
     public static final String CATEGORY_BEVERAGES = "beverages";
+
+    public static final int MAX_SPECIALS_PRODUCT = 4;
 }

@@ -1,7 +1,6 @@
 package com.grandline.showcaseepoxy.ui.models;
 
 import android.graphics.Paint;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,8 +13,6 @@ import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.ui.models.base.BaseEpoxyHolder;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -26,8 +23,8 @@ import static com.grandline.showcaseepoxy.utils.ObjectUtils.isEmpty;
  * Created by home on 9/11/17.
  */
 
-@EpoxyModelClass(layout = R.layout.detail_header_view)
-public abstract class DetailHeaderModel extends EpoxyModelWithHolder<DetailHeaderModel.ViewHolder> {
+@EpoxyModelClass(layout = R.layout.view_header_detail)
+public abstract class ModelHeaderDetail extends EpoxyModelWithHolder<ModelHeaderDetail.ViewHolder> {
 
     @EpoxyAttribute
     Product product;

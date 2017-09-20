@@ -2,6 +2,7 @@ package com.grandline.showcaseepoxy.data.source;
 
 
 import com.grandline.showcaseepoxy.data.model.Products;
+import com.grandline.showcaseepoxy.data.model.ProductsList;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 
 public interface ProductsCallback {
-    void onSuccess(List<Products> products);
+    void onSuccess(ProductsList products);
 
     void onFail(String message);
 }

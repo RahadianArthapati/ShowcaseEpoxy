@@ -2,6 +2,7 @@ package com.grandline.showcaseepoxy.ui.components.catalog;
 
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
+import com.grandline.showcaseepoxy.data.model.ProductsList;
 import com.grandline.showcaseepoxy.ui.components.base.BaseView;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class CatalogContract {
 
         void initialize();
 
-        void update(List<Products> products);
+        void update(ProductsList products);
 
         void setLoaderVisibility(boolean isVisible);
 
@@ -40,6 +41,6 @@ public class CatalogContract {
 
         void unSubscribe();
 
-        RecyclerItemListener getRecyclerItemListener();
+        //RecyclerItemListener getRecyclerItemListener();
     }
 }

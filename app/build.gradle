@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -31,11 +38,18 @@ ext {
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:26.0.2'
-    testImplementation 'junit:junit:4.12'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.0') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.8.9'
+    testCompile "org.robolectric:robolectric:3.1.4"
 
     //region Support
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
@@ -95,4 +109,9 @@ dependencies {
     //endregion
     compile "com.squareup.picasso:picasso:2.5.2"
     compile 'com.jakewharton.timber:timber:4.5.1'
+
+    //region leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.3'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.3'
+    //endregion
 }

@@ -1,6 +1,7 @@
 package com.grandline.showcaseepoxy.ui.components.base;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntegerRes;
@@ -32,7 +33,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     protected abstract void initializeDagger();
 
-    protected abstract void initializePresenter();
+    protected abstract void initializePresenter(Context context);
 
     public abstract int getLayoutId();
 
@@ -46,8 +47,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentManager = getActivity().getSupportFragmentManager();
+
         initializeDagger();
-        initializePresenter();
+        initializePresenter(getActivity());
     }
 
     @Nullable

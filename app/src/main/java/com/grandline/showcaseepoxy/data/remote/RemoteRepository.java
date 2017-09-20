@@ -1,6 +1,7 @@
 package com.grandline.showcaseepoxy.data.remote;
 
 import android.accounts.NetworkErrorException;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -35,34 +36,36 @@ import static com.grandline.showcaseepoxy.utils.ObjectUtils.isNull;
 public class RemoteRepository implements RemoteSource {
     private ServiceGenerator serviceGenerator;
     private final String UNDELIVERABLE_TAG = "Undeliverable exception";
-    private ProductCache cacheProviders;
+    //private ProductCache cacheProviders;
+
     @Inject
     public RemoteRepository(ServiceGenerator serviceGenerator) {
         this.serviceGenerator = serviceGenerator;
+        /*
         cacheProviders = new RxCache.Builder()
                 .setMaxMBPersistenceCache(5)
-                .persistence(App.getContext().getFilesDir(), new MoshiSpeaker())
-                .using(ProductCache.class);
+                .persistence( context.getFilesDir(), new MoshiSpeaker())
+                .using(ProductCache.class);*/
     }
 
     @Override
-    public Single fetchProducts(String category,boolean evict){
+    public Single fetchProducts(Context context, String category, boolean evict){
         RxJavaPlugins.setErrorHandler(throwable -> {
             Log.i(UNDELIVERABLE_TAG, throwable.getMessage());
             return;
         });
-        Single<List<Products>> products = Single.create(singleOnSubscribe ->{
-            if(!isConnected(App.getContext())){
+        Single<ProductsList> products = Single.create(singleOnSubscribe ->{
+            if(!isConnected(context)){
                 Exception exception = new NetworkErrorException();
                 singleOnSubscribe.onError(exception);
             }else{
                 try{
                     ProductService productService = serviceGenerator.createService(ProductService.class, Constants.BASE_URL);
-                    ServiceResponse serviceResponse = processCall(productService.fetchProducts(category), false);
+                    ServiceResponse serviceResponse = processCall(productService.fetchProducts(category),context, false);
                     if(serviceResponse.getCode() == SUCCESS_CODE){
                         ProductsList productsList = (ProductsList) serviceResponse.getData();
-                        List<Products> prod = productsList.getProducts();
-                        singleOnSubscribe.onSuccess(prod);
+                        //List<Products> prod = productsList.getProducts();
+                        singleOnSubscribe.onSuccess(productsList);
                     }else{
                         Throwable throwable = new NetworkErrorException();
                         singleOnSubscribe.onError(throwable);
@@ -76,8 +79,8 @@ public class RemoteRepository implements RemoteSource {
     }
 
     @NonNull
-    private ServiceResponse processCall(Call call, boolean isVoid){
-        if(!isConnected(App.getContext())){
+    private ServiceResponse processCall(Call call, Context context, boolean isVoid){
+        if(!isConnected(context)){
             return new ServiceResponse(new ServiceError());
         }
         try{

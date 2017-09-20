@@ -17,6 +17,7 @@ public class Products {
     @Json(name = "product")
     private List<Product> product = null;
 
+
     public String getCategory() {
         return category;
     }
@@ -40,5 +41,7 @@ public class Products {
     public void setProduct(List<Product> product) {
         this.product = product;
     }
+
+
 
 }

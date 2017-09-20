@@ -2,10 +2,10 @@ package com.grandline.showcaseepoxy.ui.components.subcatalog;
 
 import com.airbnb.epoxy.EpoxyAdapter;
 import com.grandline.showcaseepoxy.data.model.Product;
-import com.grandline.showcaseepoxy.ui.models.BaseEpoxyModel_;
-import com.grandline.showcaseepoxy.ui.models.ProductCardFullModel;
-import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
-import com.grandline.showcaseepoxy.ui.models.ProductCardModel_;
+import com.grandline.showcaseepoxy.ui.models.HolderLinearHorizontalCard_;
+import com.grandline.showcaseepoxy.ui.models.ModelCardFullProduct;
+import com.grandline.showcaseepoxy.ui.models.ModelCardProduct;
+import com.grandline.showcaseepoxy.ui.models.ModelCardProduct_;
 
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class SubCatalogAdapter extends EpoxyAdapter {
         void onAddtoCartClicked(int position);
     }
     private SubCatalogAdapter.SubCatalogCallbacks callback;
-    private ProductCardModel.OnModelClick onProductCardItemClick = new ProductCardModel.OnModelClick() {
-        @Override public void onClick(ProductCardModel model) {
+    private ModelCardProduct.OnModelClick onProductCardItemClick = new ModelCardProduct.OnModelClick() {
+        @Override public void onClick(ModelCardProduct model) {
             callback.onSubCatalogClicked(model.product);
         }
     };
-    private ProductCardFullModel.OnModelClick onProductCardFullItemClick = new ProductCardFullModel.OnModelClick() {
-        @Override public void onClick(ProductCardFullModel model) {
+    private ModelCardFullProduct.OnModelClick onProductCardFullItemClick = new ModelCardFullProduct.OnModelClick() {
+        @Override public void onClick(ModelCardFullProduct model) {
             callback.onSubCatalogClicked(model.product);
         }
     };
@@ -36,10 +36,10 @@ public class SubCatalogAdapter extends EpoxyAdapter {
         for (int i=0;i<p.size();i++) {
             if(i!=0 && i%6==0){
                 CardFullAdapter cardFullAdapter = new CardFullAdapter(p.get(i), onProductCardFullItemClick);
-                models.add(new BaseEpoxyModel_<CardFullAdapter>().adapter(cardFullAdapter));
+                models.add(new HolderLinearHorizontalCard_<CardFullAdapter>().adapter(cardFullAdapter));
 
             }else{
-                models.add(new ProductCardModel_().product(p.get(i)).clickListener(onProductCardItemClick));
+                models.add(new ModelCardProduct_().product(p.get(i)).clickListener(onProductCardItemClick));
 
             }
         }

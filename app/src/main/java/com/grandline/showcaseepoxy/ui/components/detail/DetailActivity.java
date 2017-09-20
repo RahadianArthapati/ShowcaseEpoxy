@@ -1,16 +1,13 @@
 package com.grandline.showcaseepoxy.ui.components.detail;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.grandline.showcaseepoxy.R;
@@ -92,7 +89,7 @@ public class DetailActivity extends AppCompatActivity {
 
         int spanCount = ScreenUtils.calculateNoOfColumns(this);
 
-        recycledViewPool.setMaxRecycledViews(R.layout.detail_header_view, 5);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_header_detail, 5);
         recyclerView.setRecycledViewPool(recycledViewPool);
 
         adapter.setSpanCount(spanCount);

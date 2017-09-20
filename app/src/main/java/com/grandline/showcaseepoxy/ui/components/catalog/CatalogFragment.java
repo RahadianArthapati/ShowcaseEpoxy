@@ -1,5 +1,6 @@
 package com.grandline.showcaseepoxy.ui.components.catalog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,6 +11,8 @@ import com.grandline.showcaseepoxy.App;
 import com.grandline.showcaseepoxy.R;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
+import com.grandline.showcaseepoxy.data.model.ProductsList;
+import com.grandline.showcaseepoxy.data.model.Special;
 import com.grandline.showcaseepoxy.ui.components.base.BaseFragment;
 import com.grandline.showcaseepoxy.ui.components.detail.DetailActivity;
 import com.grandline.showcaseepoxy.ui.components.subcatalog.SubCatalogActivity;
@@ -17,8 +20,6 @@ import com.grandline.showcaseepoxy.ui.helpers.VerticalGridCardSpacingDecoration;
 import com.grandline.showcaseepoxy.utils.Constants;
 import com.grandline.showcaseepoxy.utils.ScreenUtils;
 import com.squareup.moshi.Moshi;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,15 +29,16 @@ import butterknife.BindView;
  * Created by home on 9/14/17.
  */
 
-public class CatalogFragment extends BaseFragment implements CatalogAdapter.CatalogCallbacks,CatalogContract.View,SwipeRefreshLayout.OnRefreshListener {
+public class CatalogFragment extends BaseFragment implements CatalogCallback,CatalogContract.View,SwipeRefreshLayout.OnRefreshListener {
     @Inject
     CatalogPresenter presenter;
     @BindView(R.id.products_rv)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
-    SpecialAdapter adapter;
+    ContainerAdapter adapter;
     private final RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
+    private ProductsList productsList = new ProductsList();
     @Override
     protected void initializeDagger() {
         App app = (App) getActivity().getApplicationContext();
@@ -44,9 +46,10 @@ public class CatalogFragment extends BaseFragment implements CatalogAdapter.Cata
     }
 
     @Override
-    protected void initializePresenter() {
+    protected void initializePresenter(Context context) {
         super.presenter = presenter;
         presenter.setView(this);
+        presenter.setContext(context);
     }
 
     @Override
@@ -68,31 +71,42 @@ public class CatalogFragment extends BaseFragment implements CatalogAdapter.Cata
     public void onCatalogLongClicked(int position) {
 
     }
-
     @Override
     public void onAddToCartClicked(int position) {
 
     }
-
     @Override
     public void onShowMoreClicked(Products products) {
         navigateToSubCatalogScreen(products);
     }
 
     @Override
-    public void update(List<Products> products) {
+    public void onSpecialClicked(Special special) {
+        Snackbar.make(swipeRefreshLayout, special.getName(),Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onShowMoreSpecialClicked() {
+        Snackbar.make(swipeRefreshLayout, "Special clicked",Snackbar.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void update(ProductsList productsList) {
         if(adapter!=null) {
-            adapter.setData(products);
+            adapter.setData(productsList);
         }
     }
 
     @Override
     public void initialize() {
-        adapter = new SpecialAdapter();
+        adapter = new ContainerAdapter();
         adapter.setCallback(this);
-        recycledViewPool.setMaxRecycledViews(R.layout.product_card_view, 100);
-        recycledViewPool.setMaxRecycledViews(R.layout.product_header_view, 10);
-        recycledViewPool.setMaxRecycledViews(R.layout.product_footer_view,10);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_card_product, 100);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_card_special_product, 10);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_holder_carousel, 10);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_holder_card, 10);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_footer_product,10);
         recyclerView.setRecycledViewPool(recycledViewPool);
 
         int columns = ScreenUtils.calculateNoOfColumns(getActivity());
@@ -117,7 +131,6 @@ public class CatalogFragment extends BaseFragment implements CatalogAdapter.Cata
 
     @Override
     public void navigateToDetailsScreen(Product product) {
-        //Snackbar.make(swipeRefreshLayout,product.getName(),Snackbar.LENGTH_SHORT).show();
         String productJson = new Moshi.Builder().build().adapter(Product.class).toJson(product);
         Intent intent = new Intent(getActivity(), DetailActivity.class);
         intent.putExtra("product_detail", productJson);
@@ -150,7 +163,6 @@ public class CatalogFragment extends BaseFragment implements CatalogAdapter.Cata
     @Override
     public void showNoProductsError() {
         Snackbar.make(swipeRefreshLayout, getString(R.string.product_error),Snackbar.LENGTH_SHORT).show();
-
     }
 
     @Override

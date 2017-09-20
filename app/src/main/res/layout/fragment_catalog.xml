@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_white">
-    <include layout="@layout/special_card_view_holder"
+    <include layout="@layout/view_holder_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </android.support.v4.widget.SwipeRefreshLayout>

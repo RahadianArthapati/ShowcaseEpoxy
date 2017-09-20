@@ -16,7 +16,6 @@ import com.grandline.showcaseepoxy.data.model.Pricing;
 import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.ui.models.base.BaseEpoxyHolder;
 import com.grandline.showcaseepoxy.utils.Constants;
-import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -26,19 +25,20 @@ import butterknife.BindView;
 import static com.grandline.showcaseepoxy.utils.ObjectUtils.isEmpty;
 
 /**
- * Created by home on 9/8/17.
+ * Created by home on 9/13/17.
  */
-@EpoxyModelClass(layout = R.layout.product_card_view)
-public abstract class ProductCardModel extends EpoxyModelWithHolder<ProductCardModel.ViewHolder> {
+
+@EpoxyModelClass(layout = R.layout.view_card_full_product)
+public abstract class ModelCardFullProduct extends EpoxyModelWithHolder<ModelCardFullProduct.ViewHolder> {
 
     @EpoxyAttribute
     public Product product;
     @EpoxyAttribute(hash = false)
-    ProductCardModel.OnModelClick clickListener;
+    ModelCardFullProduct.OnModelClick clickListener;
 
 
     @Override
-    public void bind(ProductCardModel.ViewHolder holder) {
+    public void bind(ModelCardFullProduct.ViewHolder holder) {
         if(!isEmpty(product.getName())){
             holder.name.setText(product.getName());
         }
@@ -48,7 +48,7 @@ public abstract class ProductCardModel extends EpoxyModelWithHolder<ProductCardM
         if(!isEmpty(product.getPricing().getPrice().toString())){
             Pricing price = product.getPricing();
             boolean sale = price.getPrice()>price.getPromoPrice()&&price.getPromoPrice()>0;
-            holder.price_sale.setVisibility(sale?View.VISIBLE:View.GONE);
+            holder.price_sale.setVisibility(sale? View.VISIBLE:View.GONE);
             holder.price_original.setPaintFlags(sale ?
                     holder.price_original.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG
                     : holder.price_original.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
@@ -68,10 +68,10 @@ public abstract class ProductCardModel extends EpoxyModelWithHolder<ProductCardM
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.poster);
         }
-        holder.frame.setOnClickListener(v->clickListener.onClick(ProductCardModel.this));
+        holder.frame.setOnClickListener(v->clickListener.onClick(ModelCardFullProduct.this));
     }
     public interface OnModelClick {
-        void onClick(ProductCardModel model);
+        void onClick(ModelCardFullProduct model);
     }
     static class ViewHolder extends BaseEpoxyHolder {
         @BindView(R.id.frame)
@@ -90,3 +90,4 @@ public abstract class ProductCardModel extends EpoxyModelWithHolder<ProductCardM
         TextView promo;
     }
 }
+

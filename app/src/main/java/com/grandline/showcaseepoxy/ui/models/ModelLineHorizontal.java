@@ -2,7 +2,6 @@ package com.grandline.showcaseepoxy.ui.models;
 
 import android.view.View;
 
-import com.airbnb.epoxy.EpoxyModel;
 import com.airbnb.epoxy.EpoxyModelClass;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
 import com.grandline.showcaseepoxy.R;
@@ -13,8 +12,8 @@ import butterknife.BindView;
 /**
  * Created by home on 9/15/17.
  */
-@EpoxyModelClass(layout = R.layout.horizontal_line_view)
-public abstract class HorizontalLineModel extends EpoxyModelWithHolder<HorizontalLineModel.ViewHolder> {
+@EpoxyModelClass(layout = R.layout.view_horizontal_line)
+public abstract class ModelLineHorizontal extends EpoxyModelWithHolder<ModelLineHorizontal.ViewHolder> {
 
     @Override
     public int getSpanSize(int totalSpanCount, int position, int itemCount) {
@@ -22,7 +21,7 @@ public abstract class HorizontalLineModel extends EpoxyModelWithHolder<Horizonta
     }
 
     @Override
-    public void bind(HorizontalLineModel.ViewHolder holder) {
+    public void bind(ModelLineHorizontal.ViewHolder holder) {
         super.bind(holder);
         holder.horizontalLines.setVisibility(View.VISIBLE);
     }

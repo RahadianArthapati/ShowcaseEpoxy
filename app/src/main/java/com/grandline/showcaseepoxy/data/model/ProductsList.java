@@ -11,6 +11,8 @@ import java.util.List;
 public class ProductsList {
     @Json(name = "products")
     private List<Products> products = null;
+    @Json(name = "specials")
+    private List<Special> specials = null;
 
     public List<Products> getProducts() {
         return products;
@@ -18,4 +20,7 @@ public class ProductsList {
     public void setProducts(List<Products> products) {
         this.products = products;
     }
+
+    public List<Special> getSpecials(){ return specials;}
+    public void setSpecials(List<Special> specials) { this.specials = specials;}
 }

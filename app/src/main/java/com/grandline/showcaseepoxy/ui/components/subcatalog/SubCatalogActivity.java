@@ -75,9 +75,9 @@ public class SubCatalogActivity extends AppCompatActivity implements SwipeRefres
         unbinder = ButterKnife.bind(this);
         adapter = new SubCatalogAdapter();
         adapter.setCallback(this);
-        recycledViewPool.setMaxRecycledViews(R.layout.product_card_view, 50);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_card_product, 50);
         recycledViewPool.setMaxRecycledViews(R.layout.view_holder_carousel, 5);
-        recycledViewPool.setMaxRecycledViews(R.layout.product_card_view_full, 5);
+        recycledViewPool.setMaxRecycledViews(R.layout.view_card_full_product, 5);
         recyclerView.setRecycledViewPool(recycledViewPool);
 
         adapter.setSpanCount(ScreenUtils.calculateNoOfColumns(this));

@@ -1,10 +1,12 @@
 package com.grandline.showcaseepoxy.ui.models;
 
+/**
+ * Created by home on 9/19/17.
+ */
+
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.airbnb.epoxy.EpoxyAdapter;
 import com.airbnb.epoxy.EpoxyAttribute;
@@ -16,11 +18,12 @@ import com.grandline.showcaseepoxy.ui.models.base.BaseEpoxyHolder;
 import butterknife.BindView;
 
 /**
- * Created by home on 9/15/17.
+ * Created by home on 9/19/17.
  */
-@EpoxyModelClass(layout = R.layout.special_card_view_holder)
 
-public abstract class SpecialsCardHolder<A extends EpoxyAdapter> extends EpoxyModelWithHolder<SpecialsCardHolder.RecyclerHolder>{
+@EpoxyModelClass(layout = R.layout.view_holder_special_child)
+
+public abstract class HolderGrid<A extends EpoxyAdapter> extends EpoxyModelWithHolder<HolderGrid.RecyclerHolder> {
 
     @EpoxyAttribute
     A adapter;
@@ -36,29 +39,27 @@ public abstract class SpecialsCardHolder<A extends EpoxyAdapter> extends EpoxyMo
     }
 
     @Override
-    public void bind(SpecialsCardHolder.RecyclerHolder holder) {
+    public void bind(HolderGrid.RecyclerHolder holder) {
         super.bind(holder);
         holder.recyclerView.swapAdapter(adapter, false);
 
     }
 
     @Override
-    public void unbind(SpecialsCardHolder.RecyclerHolder holder) {
+    public void unbind(HolderGrid.RecyclerHolder holder) {
         super.unbind(holder);
         holder.recyclerView.swapAdapter(null,true);
 
     }
 
-    static class RecyclerHolder extends BaseEpoxyHolder{
-        @BindView(R.id.recycler_special)
+    static class RecyclerHolder extends BaseEpoxyHolder {
+        @BindView(R.id.recycler)
         RecyclerView recyclerView;
 
         @Override
         protected void bindView(View itemView) {
             super.bindView(itemView);
-            //GridLayoutManager layout = new GridLayoutManager(itemView.getContext(), LinearLayoutManager.VERTICAL,2,false);
-            LinearLayoutManager layout = new LinearLayoutManager(itemView.getContext());
-            layout.setOrientation(LinearLayout.VERTICAL);
+            RecyclerView.LayoutManager layout = new GridLayoutManager(itemView.getContext(), 2);
             recyclerView.setLayoutManager(layout);
             recyclerView.setHasFixedSize(true);
         }

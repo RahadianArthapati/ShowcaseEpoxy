@@ -67,4 +67,12 @@
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
+
+
+    <style name="HeaderProductText">
+        <item name="android:fontFamily">@font/berkshire_swash</item>
+        <item name="android:textSize">@dimen/abc_text_size_large_material</item>
+        <item name="android:textColor">@color/bright_red</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

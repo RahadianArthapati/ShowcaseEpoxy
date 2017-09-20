@@ -1,6 +1,7 @@
 package com.grandline.showcaseepoxy.ui.components.base;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.lang.ref.WeakReference;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class BasePresenter<T extends BaseView> {
 
     private WeakReference<T> view;
+    private Context context;
 
     protected AtomicBoolean isViewAlive = new AtomicBoolean();
 
@@ -24,6 +26,10 @@ public abstract class BasePresenter<T extends BaseView> {
 
     public void initialize(Bundle extras) {
     }
+
+    public void setContext(Context context){this.context = context;}
+
+    public Context getContext(){return context;}
 
     public void start() {
         isViewAlive.set(true);

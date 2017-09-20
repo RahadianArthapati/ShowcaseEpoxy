@@ -1,5 +1,8 @@
 package com.grandline.showcaseepoxy.domain;
+import android.content.Context;
+
 import com.grandline.showcaseepoxy.data.model.Products;
+import com.grandline.showcaseepoxy.data.model.ProductsList;
 import com.grandline.showcaseepoxy.data.remote.RemoteRepository;
 import com.grandline.showcaseepoxy.data.source.ProductsCallback;
 
@@ -23,8 +26,8 @@ public class ProductsDomain {
     private RemoteRepository repository;
     private CompositeDisposable compositeDisposable;
     private Disposable productsListDisposable;
-    private Single<List<Products>> productListSingle;
-    private DisposableSingleObserver<List<Products>> disposableSingleObserver;
+    private Single<ProductsList> productListSingle;
+    private DisposableSingleObserver<ProductsList> disposableSingleObserver;
 
     @Inject
     public ProductsDomain(RemoteRepository repository, CompositeDisposable compositeDisposable) {
@@ -32,10 +35,10 @@ public class ProductsDomain {
         this.compositeDisposable = compositeDisposable;
     }
 
-    public void getProducts(ProductsCallback callback, String category, boolean evict) {
-        disposableSingleObserver = new DisposableSingleObserver<List<Products>>() {
+    public void getProducts(ProductsCallback callback, Context context, String category, boolean evict) {
+        disposableSingleObserver = new DisposableSingleObserver<ProductsList>() {
             @Override
-            public void onSuccess(List<Products> products) {
+            public void onSuccess(ProductsList products) {
                 callback.onSuccess(products);
             }
 
@@ -45,7 +48,7 @@ public class ProductsDomain {
             }
         };
         if (!compositeDisposable.isDisposed()) {
-            productListSingle = repository.fetchProducts(category,evict);
+            productListSingle = repository.fetchProducts(context, category,evict);
             productsListDisposable = productListSingle
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

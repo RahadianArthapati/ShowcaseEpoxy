@@ -1,5 +1,7 @@
 package com.grandline.showcaseepoxy.data.remote;
 
+import android.content.Context;
+
 import io.reactivex.Single;
 
 /**
@@ -8,6 +10,6 @@ import io.reactivex.Single;
 
 interface RemoteSource {
 
-    Single fetchProducts(String category,boolean evict);
+    Single fetchProducts(Context context, String category, boolean evict);
     //Single getProduct(String category);
 }

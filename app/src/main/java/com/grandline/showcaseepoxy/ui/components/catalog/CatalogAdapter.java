@@ -1,18 +1,13 @@
 package com.grandline.showcaseepoxy.ui.components.catalog;
 
 import com.airbnb.epoxy.EpoxyAdapter;
-import com.grandline.showcaseepoxy.data.model.Product;
 import com.grandline.showcaseepoxy.data.model.Products;
-import com.grandline.showcaseepoxy.ui.models.BaseEpoxyModel_;
-import com.grandline.showcaseepoxy.ui.models.HorizontalLineModel_;
-import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
-import com.grandline.showcaseepoxy.ui.models.ProductFooterModel;
-import com.grandline.showcaseepoxy.ui.models.ProductFooterModel_;
-
-import com.grandline.showcaseepoxy.ui.models.ProductHeaderModel_;
-import com.grandline.showcaseepoxy.utils.RecyclerState;
-
-import java.util.List;
+import com.grandline.showcaseepoxy.ui.models.HolderLinearHorizontalCard_;
+import com.grandline.showcaseepoxy.ui.models.ModelCardProduct;
+import com.grandline.showcaseepoxy.ui.models.ModelFooterProduct;
+import com.grandline.showcaseepoxy.ui.models.ModelFooterProduct_;
+import com.grandline.showcaseepoxy.ui.models.ModelHeaderProduct_;
+import com.grandline.showcaseepoxy.ui.models.ModelLineHorizontal_;
 
 /**
  * Created by home on 9/7/17.
@@ -20,41 +15,33 @@ import java.util.List;
 
 public class CatalogAdapter extends EpoxyAdapter {
 
-    public interface CatalogCallbacks{
-        void onCatalogClicked(Product product);
-        void onCatalogLongClicked(int position);
-        void onAddToCartClicked(int position);
-        void onShowMoreClicked(Products products);
+
+    public CatalogAdapter() {
+        //enableDiffing();
     }
-    private CatalogCallbacks callback;
-    private ProductCardModel.OnModelClick onCarouselItemClick = new ProductCardModel.OnModelClick() {
-        @Override public void onClick(ProductCardModel model) {
+
+    private CatalogCallback callback;
+    private ModelCardProduct.OnModelClick onCarouselItemClick = new ModelCardProduct.OnModelClick() {
+        @Override public void onClick(ModelCardProduct model) {
             callback.onCatalogClicked(model.product);
         }
     };
-    private ProductFooterModel.OnModelClick onFooterItemClick = new ProductFooterModel.OnModelClick() {
+    private ModelFooterProduct.OnModelClick onFooterItemClick = new ModelFooterProduct.OnModelClick() {
         @Override
         public void onClick(Products products) {
             callback.onShowMoreClicked(products);
         }
     };
     public void setCatalog(Products products) {
-        models.clear();
+        //models.clear();
         CarouselAdapter carouselAdapter = new CarouselAdapter(products.getProduct(), onCarouselItemClick);
-        models.add(new ProductHeaderModel_().title(products.getCategory()).count(products.getProduct().size()));
-        models.add(new BaseEpoxyModel_<CarouselAdapter>().adapter(carouselAdapter));
-        models.add(new HorizontalLineModel_());
-        models.add(new ProductFooterModel_().products(products).clickListener(onFooterItemClick));
-
+        models.add(new ModelHeaderProduct_().title(products.getCategory()).count(products.getProduct().size()));
+        models.add(new HolderLinearHorizontalCard_<CarouselAdapter>().adapter(carouselAdapter));
+        models.add(new ModelLineHorizontal_());
+        models.add(new ModelFooterProduct_().products(products).clickListener(onFooterItemClick));
         //notifyModelsChanged();
     }
-    public void setCallback(CatalogCallbacks callback) {
+    public void setCallback(CatalogCallback callback) {
         this.callback = callback;
     }
-
-    /*
-    public CatalogAdapter() {
-        enableDiffing();
-    }
-    */
 }

@@ -3,8 +3,8 @@ package com.grandline.showcaseepoxy.ui.components.catalog;
 
 import com.airbnb.epoxy.EpoxyAdapter;
 import com.grandline.showcaseepoxy.data.model.Product;
-import com.grandline.showcaseepoxy.ui.models.ProductCardModel;
-import com.grandline.showcaseepoxy.ui.models.ProductCardModel_;
+import com.grandline.showcaseepoxy.ui.models.ModelCardProduct;
+import com.grandline.showcaseepoxy.ui.models.ModelCardProduct_;
 
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CarouselAdapter extends EpoxyAdapter {
 
-    public CarouselAdapter(List<Product> product, ProductCardModel.OnModelClick listener){
+    public CarouselAdapter(List<Product> product, ModelCardProduct.OnModelClick listener){
         ArrayList<Product> new_product = new ArrayList<>(5);
         for(Product p:product){
             if(!p.getPromotions().get(0).getType().equals(0)){
@@ -36,7 +36,7 @@ public class CarouselAdapter extends EpoxyAdapter {
             }
         }
         for (Product p:new_product) {
-            addModel(new ProductCardModel_()
+            addModel(new ModelCardProduct_()
                     .product(p)
                     .clickListener(listener)
             );
